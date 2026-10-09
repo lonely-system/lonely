@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lonely — Discord Server</title>
+<style>
+:root {
+    --bg-color: #0e091a;
+    --main-pink: #ff69b4;
+    --soft-pink: #ffb6d5;
+    --dark-pink: #992255;
+    --violet: #8a2be2;
+    --glow-pink: rgba(255, 105, 180, 0.6);
+    --glow-violet: rgba(138, 43, 226, 0.5);
+    --text-color: #f7ebf2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: radial-gradient(circle at 50% 0%, #1a0f2e 0%, var(--bg-color) 60%);
+    color: var(--text-color);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+.bg-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(180px);
+    z-index: -2;
+    pointer-events: none;
+}
+.bg-glow.pink   { width: 600px; height: 600px; background: var(--dark-pink); opacity: .35; top: -200px; left: -200px; }
+.bg-glow.violet { width: 700px; height: 700px; background: var(--violet);    opacity: .25; bottom: -250px; right: -250px; }
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 40px;
+}
+.hero img.cover {
+    width: min(90vw, 520px);
+    border-radius: 24px;
+    box-shadow: 0 0 60px var(--glow-pink), 0 0 120px var(--glow-violet);
+    animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-12px); }
+}
+.hero h1 {
+    margin-top: 28px;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    background: linear-gradient(135deg, #fff, var(--soft-pink), var(--main-pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px var(--glow-pink);
+}
+.hero p.tagline {
+    margin-top: 14px;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    opacity: .75;
+}
+.btn-join {
+    margin-top: 34px;
+    padding: 16px 46px;
+    background: linear-gradient(135deg, var(--main-pink), var(--violet));
+    color: #fff;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    box-shadow: 0 0 30px var(--glow-pink);
+    transition: transform .2s ease, box-shadow .2s ease;
+    display: inline-block;
+}
+.btn-join:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 0 55px var(--glow-pink), 0 0 90px var(--glow-violet);
+}
+
+section {
+    max-width: 1100px;
+    margin: 70px auto 0;
+    padding: 0 24px;
+}
+section h2 {
+    text-align: center;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    letter-spacing: 0.12em;
+    margin-bottom: 30px;
+    color: var(--soft-pink);
+    text-shadow: 0 0 18px var(--glow-pink);
+}
+.card {
+    background: rgba(255, 105, 180, 0.05);
+    border: 1px solid rgba(255, 105, 180, 0.25);
+    border-radius: 20px;
+    padding: 28px 32px;
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 40px rgba(255, 105, 180, 0.05), 0 0 25px rgba(138, 43, 226, 0.15);
+    line-height: 1.75;
+    font-size: 1.05rem;
+}
+.card p + p { margin-top: 12px; }
+
+.mods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+.mod {
+    background: linear-gradient(160deg, rgba(255,105,180,0.10), rgba(138,43,226,0.10));
+    border: 1px solid rgba(255, 105, 180, 0.3);
+    border-radius: 20px;
+    padding: 24px 22px;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.mod:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 35px var(--glow-pink), 0 0 60px var(--glow-violet);
+    border-color: var(--main-pink);
+}
+.mod .nick {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--soft-pink);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    word-break: break-all;
+}
+.mod .role {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: .65;
+    margin-bottom: 14px;
+}
+.mod .desc {
+    font-size: .95rem;
+    opacity: .9;
+    line-height: 1.6;
+}
+
+footer {
+    margin-top: 90px;
+    text-align: center;
+    font-size: .85rem;
+    opacity: .5;
+    letter-spacing: 0.1em;
+}
+footer span { color: var(--main-pink); }
+
+.petal {
+    position: fixed;
+    top: -30px;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, var(--soft-pink), var(--dark-pink));
+    border-radius: 50% 0 50% 50%;
+    opacity: .55;
+    pointer-events: none;
+    animation: fall linear infinite;
+    z-index: -1;
+}
+@keyframes fall {
+    0%   { transform: translateY(-50px) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(720deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow pink"></div>
+<div class="bg-glow violet"></div>
+
+<div class="hero">
+    <img class="cover" src="static/lonely.png" alt="lonely">
+    <h1>lonely</h1>
+    <p class="tagline">там, где тишина становится уютной 🌸</p>
+    <a class="btn-join" href="https://discord.gg/k5gj4XQ66" target="_blank">Войти в Discord</a>
+</div>
+
+<section>
+    <h2>✦ О сервере ✦</h2>
+    <div class="card">
+        <p><b>lonely</b> — это маленькое, но уютное место для тех, кто устал от шумных гигантов. Здесь не нужно кричать, чтобы тебя услышали — достаточно просто быть собой.</p>
+        <p>У нас тёплая атмосфера, живое общение, ночные разговоры под музыку и люди, которые реально друг друга слышат. Мы не про количество — мы про качество.</p>
+        <p>Заходи, наливай чай, включай плейлист и оставайся. Здесь тебе всегда рады. 🖤💗</p>
+    </div>
+</section>
+
+<section>
+    <h2>✦ Наша команда ✦</h2>
+    <div class="mods">
+        <div class="mod">
+            <div class="nick">root.hidden</div>
+            <div class="role">Техно-маг</div>
+            <div class="desc">Первый парень — тот самый, кто с закрытыми глазами напишет тебе бота, а потом ещё и оптимизирует. Если что-то сломалось — он уже починил. Даже не спрашивай как.</div>
+        </div>
+        <div class="mod">
+            <div class="nick">kristendd</div>
+            <div class="role">Душа компании</div>
+            <div class="desc">Харизма на максималках. Заходит в войс — и там сразу становится весело. Умеет поднять настроение одной фразой и разрулить любой спор.</div>
+        </div>
+        <div class="mod">
+            <div class="nick">lolpa_tipo</div>
+            <div class="role">Гроза района</div>
+            <div class="desc">Малочный зуб. Если кто-то нарушил правила — он уже рядом. Справедливый, но лучше с ним не шутить. Уважение заслуживают, а не выпрашивают.</div>
+        </div>
+        <div class="mod">
+            <div class="nick">producep</div>
+            <div class="role">Меломан с душой</div>
+            <div class="desc">Душевный человек с безупречным вкусом в музыке. Кинет тебе трек, который ты будешь слушать неделю. Атмосфера сервера во многом держится на нём.</div>
+        </div>
+        <div class="mod">
+            <div class="nick">sirenogolowilalala</div>
+            <div class="role">Хранитель сайта</div>
+            <div class="desc">Это я. Тот, кто собрал этот сайт, следит за ним и делает так, чтобы всё работало и выглядело красиво. Тихо, но по делу. 🌸</div>
+        </div>
+    </div>
+</section>
+
+<footer>сделано с <span>♥</span> для lonely</footer>
+
+<script>
+for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    document.body.appendChild(p);
+}
+</script>
+
+</body>
+</html>
